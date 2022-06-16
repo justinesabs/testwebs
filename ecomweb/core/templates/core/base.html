@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,31 +15,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <title>GadgetsExpress</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'icon.png' %}"/>
 </head>
 <body>
     <nav class="border-b border-gray-400">
         <div class="max-w-6xl mx-auto py-2 px-6 xl:px-0 flex items-center justify-between">
             <div class="menu-center flex items-center space-x-6">
-                <a href="{% url 'frontpage' %}" class="py-4 text-lg hover:text-orange-100 text-orange-600 font-semibold">EcomWeb</a>
+                <a href="{% url 'frontpage' %}" class="py-4 text-lg hover:text-orange-100 text-orange-600 font-semibold">GadgetsExpress</a>
 
                 <ul class="flex items-center space-x-4">
                     <li><a class="font-medium hover:text-orange-500 text-orange-300" href="{% url 'shop' %}">Shop</a></li>
                     <li><a class="font-medium hover:text-orange-500 text-orange-300" href="{% url 'aboutus' %}">Our Team</a></li>
 
-                    {% if request.user.is_authenticated %}
-                    <li><a class="font-medium text-orange-300" href="{% url 'logout' %}">Logout</a></li>
-                    {% endif %}
                 </ul>
             </div>
 
             <div class="menu-right flex items-center space-x-4">
-                <a href="{% url 'login' %}">
+                {% if request.user.is_authenticated %}
+                    <a class="font-medium text-orange-300" href="{% url 'logout' %}">Logout</a>
+                {% endif %}
+                <a href="{% url 'myaccount' %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="orange" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </a>
-
+                <div hx-get="{% url 'hx_menu_cart' %}" hx-trigger="update-menu-cart from:body" hx-swap="innerHTML">
                 {% include 'carts/menu_cart.html' %}
+                </div>
             </div>
         </div>
     </nav>
@@ -48,6 +51,7 @@
         {% endblock %}
     </main>
 
+    {% comment %}
     <footer class="border-gray-400 bg-orange-500 fixed inset-x-0 bottom-0 border-gray-400">
         <div class="max-w-6xl mx-auto py-0 px-6 xl:px-0 md:flex justify-between">
             <div class="footer-left mb-12 md:mb-0">
@@ -66,7 +70,16 @@
             </div>
         </div>
     </footer>
+    {% endcomment %}
+    <footer class="bg-orange-500 text-center lg:text-left fixed inset-x-0 bottom-0">
+        <div class="text-white text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2021 Copyright
+          <a class="text-white" href="https://tailwind-elements.com/">GadgetsExpress</a>
+        </div>
+    </footer>
+
 
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
 </body>
 </html>
+
