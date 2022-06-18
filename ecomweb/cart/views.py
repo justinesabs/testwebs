@@ -51,4 +51,7 @@ def checkout(request):
 def hx_menu_cart(request):
     return render(request, 'carts/menu_cart.html')
 
+def hx_cart_total(request):
+    return render(request, 'carts/partials/cart_total.html')
+
 
